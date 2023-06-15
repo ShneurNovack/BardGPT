@@ -16,6 +16,8 @@ function MainPage() {
   // Init GPT and Bard
   const location = useLocation();
   let initStr = new URLSearchParams(location.search).get("prompt");
+  let demoStr = "You are currently integrated via api on a Reshape Experiment called 'ChatGPT and Bard Conversation' where you will have a conversation with Google Bard (Bard is Google's LLM). When you send a response to this message it will be answered by Google Bard, meaning Bard will be replacing the user in this conversation, you will be taking to Bard. Please don't prefix your responses with 'Assistant:' or anything else. Remember, you are starting this conversation which means no one will see this prompt which means you should respond as if you are the one starting the conversation, so dont start your first response with 'sure,', 'okay,' etc. Now please initiate the conversation based on the following prompt for your conversation with Google Bard: \n '";
+  let firstRequestStr = demoStr + initStr + "'";
 
   const handleConversation = () => {
     if(curState === false)
@@ -26,11 +28,11 @@ function MainPage() {
 
   useEffect(() => {
     if(curGPTResponse.current.values.length === 0) {
-      let initGTPResponse = {role: "assistant", content: initStr}
+      let initGTPResponse = {role: "assistant", content: firstRequestStr}
       curGPTResponse.current.values = [...curGPTResponse.current.values, initGTPResponse];
     }
     if(curBardResponse.current.values.length === 0) {
-      let initBardResponse = {author: "1", content: initStr}
+      let initBardResponse = {author: "1", content: firstRequestStr}
       curBardResponse.current.values = [...curBardResponse.current.values, initBardResponse];
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,9 +44,6 @@ function MainPage() {
   }, [curResults])
 
   const getResult = async () => {
-    console.log("===============State==========================")
-    console.log(curState)
-
     let strAPIURL = ""
     if(curCount.current.valueOf() % 2 === 0)
       strAPIURL = BACKEND_API_URL + "/openai";
@@ -61,32 +60,14 @@ function MainPage() {
       setCurResults(curResults => [...curResults, resultStr]);
 
       curCount.current += 1;
-      if (((resultStr.toLowerCase().includes('okay') && resultStr.toLowerCase().indexOf('okay') === 0) || 
-              resultStr.toLowerCase().includes('sure')) && resultStr.toLowerCase().indexOf('sure') === 0) {
-          let updateStr = resultStr.slice(5);
-
-          console.log("Contain=========================")
-          let newGTPResponse = {role: curCount.current.valueOf() % 2 === 0 ? "assistant" : "user", content: updateStr}
-          curGPTResponse.current.values = [...curGPTResponse.current.values, newGTPResponse];
-          let newBardResponse = {author: curCount.current.valueOf() % 2 === 0 ? "1" : "2", content: updateStr}
-          curBardResponse.current.values = [...curBardResponse.current.values, newBardResponse];
-      } else {
-        console.log("No--=-----------Contain=========================")
-          let newGTPResponse = {role: curCount.current.valueOf() % 2 === 0 ? "assistant" : "user", content: resultStr}
-          curGPTResponse.current.values = [...curGPTResponse.current.values, newGTPResponse];
-          let newBardResponse = {author: curCount.current.valueOf() % 2 === 0 ? "1" : "2", content: resultStr}
-          curBardResponse.current.values = [...curBardResponse.current.values, newBardResponse];
-      }
-
-      console.log(curGPTResponse)
-      console.log(curBardResponse)
+      let newGTPResponse = {role: curCount.current.valueOf() % 2 === 0 ? "assistant" : "user", content: resultStr}
+      curGPTResponse.current.values = [...curGPTResponse.current.values, newGTPResponse];
+      let newBardResponse = {author: curCount.current.valueOf() % 2 === 0 ? "1" : "2", content: resultStr}
+      curBardResponse.current.values = [...curBardResponse.current.values, newBardResponse];
     } catch (error) {
       console.log(error)
     }
   }
-
-  console.log("Conversation===============")
-  console.log(curState)
 
   return (
     <div className="App">
@@ -96,10 +77,10 @@ function MainPage() {
             <img src="/image/logo.png" alt="" className="logo-image" />
             <div className="logo-text">Experients</div>
           </div>
-          <div className="more-experiements">More Experiments {">"}</div>
-          <div className="logo-btn">
-            <img src="/image/logobtn.png" alt="" />
-          </div>
+          <a href="#" className="more-experiements">More Experiments {">"}</a>
+          <a href="#" className="logo-btn">
+            <img src="/image/logobtn.png" alt="" style={{width: "35px"}}/>
+          </a>
         </div>
         <div className="conversation-main">
           <div className="conversation-title">
@@ -109,7 +90,7 @@ function MainPage() {
             {curResults.map((result, key) => (
               <div className="conversation-gpt" key={key}>
                 <div className="conversation-gpt-header">
-                  <img src={key % 2 === 0 ? "/image/chatgpt-icon.svg" : "/image/Google_Bard_logo.svg" }  alt="" />
+                  <img src={key % 2 === 0 ? "/image/chatgpt-icon.svg" : "/image/Google_Bard_logo.svg" }  alt="" style={{width: "35px"}}/>
                   <span className="conversation-gpt-title">{key % 2 === 0 ? "ChatGPT" : "Bard" }</span>
                 </div>
                 <div>

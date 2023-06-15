@@ -32,10 +32,10 @@ function Conversation() {
             <img src="/image/logo.png" alt="" className="logo-image" />
             <div className="logo-text">Experients</div>
           </div>
-          <div className="more-experiements">More Experiments {">"}</div>
-          <div className="logo-btn">
-            <img src="/image/logobtn.png" alt="" />
-          </div>
+          <a href="#" className="more-experiements">More Experiments {">"}</a>
+          <a href="#" className="logo-btn">
+            <img src="/image/logobtn.png" alt="" style={{width: "35px"}}/>
+          </a>
         </div>
         <div className="content-main">
           <div className="content-title">
@@ -47,9 +47,9 @@ function Conversation() {
             value={curstr}
             onChange={handleText}
           />
-          <span className="content-validation">
+          <div className="content-validation">
             {curState ? "* This field is required" : ""}
-          </span>
+          </div>
           <div className="contentBtn-main">
             <button className="contentBtn" onClick={gotoConversation}>
               Begin conversation
@@ -65,7 +65,7 @@ function Conversation() {
               to generate human-like text, providing a glimpse into the future
               of AI applications. If you're interested in creating an ai
               application or are interested in our work at Reshape Creative,{" "}
-              <strong>visit our website</strong>
+              <a href="#" className="experiment-desc-link">visit our website</a>
             </div>
           </div>
         </div>
