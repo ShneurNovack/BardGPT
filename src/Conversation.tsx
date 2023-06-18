@@ -28,13 +28,13 @@ function MainPage() {
 
   useEffect(() => {
     if(curGPTResponse.current.values.length === 0) {
-      let initGTPResponse = {role: "assistant", content: firstRequestStr}
+      let initGTPResponse = {role: "system", content: firstRequestStr}
       curGPTResponse.current.values = [...curGPTResponse.current.values, initGTPResponse];
     }
-    if(curBardResponse.current.values.length === 0) {
-      let initBardResponse = {author: "1", content: firstRequestStr}
-      curBardResponse.current.values = [...curBardResponse.current.values, initBardResponse];
-    }
+    // if(curBardResponse.current.values.length === 0) {
+    //   let initBardResponse = {author: "3", content: firstRequestStr}
+    //   curBardResponse.current.values = [...curBardResponse.current.values, initBardResponse];
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -60,14 +60,21 @@ function MainPage() {
       setCurResults(curResults => [...curResults, resultStr]);
 
       curCount.current += 1;
-      let newGTPResponse = {role: curCount.current.valueOf() % 2 === 0 ? "assistant" : "user", content: resultStr}
+      let newGTPResponse = {role: curCount.current.valueOf() % 2 === 0 ? "user" : "assistant", content: resultStr}
       curGPTResponse.current.values = [...curGPTResponse.current.values, newGTPResponse];
-      let newBardResponse = {author: curCount.current.valueOf() % 2 === 0 ? "1" : "2", content: resultStr}
+      let newBardResponse = {author: curCount.current.valueOf() % 2 === 0 ? "1" : "0", content: resultStr}
       curBardResponse.current.values = [...curBardResponse.current.values, newBardResponse];
+
+   
     } catch (error) {
       console.log(error)
     }
+
+    console.log("GPT",    curCount.current, curGPTResponse );
+    console.log("Bard", curCount.current, curBardResponse);
   }
+
+  
 
   return (
     <div className="App">
