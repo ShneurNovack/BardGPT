@@ -13,8 +13,18 @@ function MainPage() {
   let curGPTResponse = useRef<{values: {role: string, content: string | null}[]}>({values: []});
   let curBardResponse = useRef<{values: {author: string, content: string | null}[]}>({values: []});
 
-  const conversationContentRef = useRef<HTMLDivElement>(null);
+  const conversationContentRef: any = useRef(null);
   const [autoScroll, setAutoScroll] = useState(true);
+  
+  const handleScroll = () => {
+    if (conversationContentRef.current) {
+      const { scrollTop, clientHeight, scrollHeight } = conversationContentRef.current;
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10; // add a small buffer
+      setTimeout(() => {
+        setAutoScroll(isAtBottom);
+      }, 50); // delay auto-scroll behavior by 50 ms
+    }
+  };
   
   // Init GPT and Bard
   const location = useLocation();
@@ -79,18 +89,10 @@ function MainPage() {
   }
 
   useEffect(() => {
-    if (autoScroll && conversationContentRef.current) {
+    if (conversationContentRef.current && autoScroll) {
       conversationContentRef.current.scrollTop = conversationContentRef.current.scrollHeight;
     }
-  }, [curResults, autoScroll]);
-
-  const handleScroll = () => {
-    if (conversationContentRef.current) {
-      const { scrollTop, scrollHeight, clientHeight } = conversationContentRef.current;
-      const isAtBottom = scrollTop + clientHeight === scrollHeight;
-      setAutoScroll(isAtBottom);
-    }
-  };
+  }, [curResults]);
 
   return (
     <div className="App">
