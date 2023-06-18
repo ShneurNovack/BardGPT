@@ -12,6 +12,9 @@ function MainPage() {
   const curCount = useRef(0)
   let curGPTResponse = useRef<{values: {role: string, content: string | null}[]}>({values: []});
   let curBardResponse = useRef<{values: {author: string, content: string | null}[]}>({values: []});
+
+  const conversationContentRef = useRef<HTMLDivElement>(null);
+  const [autoScroll, setAutoScroll] = useState(true);
   
   // Init GPT and Bard
   const location = useLocation();
@@ -57,6 +60,11 @@ function MainPage() {
       const response = await axios.post(strAPIURL, requestData);
       let resultStr = response.data;
 
+      if(resultStr === "limited"){
+        setCurState(true);
+        alert("There was an error, please go back to the prompt page and reload it, contact us if the issues persists.");
+      }
+
       setCurResults(curResults => [...curResults, resultStr]);
 
       curCount.current += 1;
@@ -64,17 +72,25 @@ function MainPage() {
       curGPTResponse.current.values = [...curGPTResponse.current.values, newGTPResponse];
       let newBardResponse = {author: curCount.current.valueOf() % 2 === 0 ? "1" : "0", content: resultStr}
       curBardResponse.current.values = [...curBardResponse.current.values, newBardResponse];
-
    
     } catch (error) {
       console.log(error)
     }
-
-    console.log("GPT",    curCount.current, curGPTResponse );
-    console.log("Bard", curCount.current, curBardResponse);
   }
 
-  
+  useEffect(() => {
+    if (autoScroll && conversationContentRef.current) {
+      conversationContentRef.current.scrollTop = conversationContentRef.current.scrollHeight;
+    }
+  }, [curResults, autoScroll]);
+
+  const handleScroll = () => {
+    if (conversationContentRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = conversationContentRef.current;
+      const isAtBottom = scrollTop + clientHeight === scrollHeight;
+      setAutoScroll(isAtBottom);
+    }
+  };
 
   return (
     <div className="App">
@@ -93,7 +109,7 @@ function MainPage() {
           <div className="conversation-title">
             <strong>Prompt:</strong>&nbsp;{initStr}
           </div>
-          <div className="conversation-content">
+          <div className="conversation-content" onScroll={handleScroll} ref={conversationContentRef}>
             {curResults.map((result, key) => (
               <div className="conversation-gpt" key={key}>
                 <div className="conversation-gpt-header">
