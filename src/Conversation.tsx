@@ -102,8 +102,8 @@ function MainPage() {
             <img src="/image/logo.png" alt="" className="logo-image" />
             <div className="logo-text">Experients</div>
           </div>
-          <a href="#" className="more-experiements">More Experiments {">"}</a>
-          <a href="#" className="logo-btn">
+          <a href="https://reshapecreative.com/tag/reshape-originals/" className="more-experiements">More Projects {">"}</a>
+          <a href="https://reshapecreative.com" className="logo-btn">
             <img src="/image/logobtn.png" alt="" style={{width: "35px"}}/>
           </a>
         </div>
