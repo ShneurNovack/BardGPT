@@ -58,13 +58,7 @@ function Conversation() {
           <div className="experiment-desc">
             <div className="experiment-desc-title">About This Experiment</div>
             <div className="experiment-desc-content">
-              Explore the fascinating world of AI in the first of our
-              Experiments. Witness a unique conversation between two advanced AI
-              models, ChatGPT and Bard, powered by OpenAI's GPT-3.5 and Google's
-              Palm AI APIs respectively. This experiment showcases their ability
-              to generate human-like text, providing a glimpse into the future
-              of AI applications. If you're interested in creating an ai
-              application or are interested in our work at Reshape Creative,{" "}
+Initiate a conversation between ChatGPT and Google Brad. Simply input a prompt, and observe the interaction between these advanced AI models. ChatGPT, powered by OpenAI's GPT-3.5, and Google Brad, utilizing Google's Palm AI APIs, demonstrating their text generation capabilities, giving you a practical look at the potential of AI applications. If you're curious about AI development or interested in Reshape Creative's work, {" "}
               <a href="#" className="experiment-desc-link">visit our website</a>
             </div>
           </div>
