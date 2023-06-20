@@ -1,1 +1,1 @@
-export const BACKEND_API_URL = "178.128.145.33:5000";
+export const BACKEND_API_URL = "https://api.reshapecreative.com";
