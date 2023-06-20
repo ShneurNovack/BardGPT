@@ -32,8 +32,8 @@ function Conversation() {
             <img src="/image/logo.png" alt="" className="logo-image" />
             <div className="logo-text">Experients</div>
           </div>
-          <a href="#" className="more-experiements">More Experiments {">"}</a>
-          <a href="#" className="logo-btn">
+          <a href="https://reshapecreative.com/tag/reshape-originals/" className="more-experiements">More Projects {">"}</a>
+          <a href="https://reshapecreative.com" className="logo-btn">
             <img src="/image/logobtn.png" alt="" style={{width: "35px"}}/>
           </a>
         </div>
@@ -59,7 +59,7 @@ function Conversation() {
             <div className="experiment-desc-title">About This Experiment</div>
             <div className="experiment-desc-content">
 Initiate a conversation between ChatGPT and Google Brad. Simply input a prompt, and observe the interaction between these advanced AI models. ChatGPT, powered by OpenAI's GPT-3.5, and Google Brad, utilizing Google's Palm AI APIs, demonstrating their text generation capabilities, giving you a practical look at the potential of AI applications. If you're curious about AI development or interested in Reshape Creative's work, {" "}
-              <a href="#" className="experiment-desc-link">visit our website</a>
+              <a href="https://reshapecreative.com" className="experiment-desc-link">visit our website</a>
             </div>
           </div>
         </div>
